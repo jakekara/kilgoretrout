@@ -6,6 +6,7 @@ setup(name='tabstream',
       author='Jake Kara',
       author_email='jake@jakekara.com',
       license='GPL3',
+      install_requires['pandas==0.19.2']
       packages=['tabstream','tabstream/procedures'],
       scripts=['bin/ts'])
       

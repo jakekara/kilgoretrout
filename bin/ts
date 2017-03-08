@@ -7,7 +7,7 @@ import pandas as pd
 import sys, argparse, csv
 
 from tabstream.transforms import drop, select, pretty_cols, rename_cols
-from tabstream.procedures.registry import do_procedure
+from tabstream.procedures.registry import do_procedures
 from tabstream.error import eprint
 
 def get_args():
@@ -25,6 +25,8 @@ def get_args():
                         help='Prettify column names', required=False)
     parser.add_argument('-j','--json', action='store_true', required=False,
                         default=False)
+    parser.add_argument('-f','--force', action='store_true', required=False,
+                        help="Read all input as strings",default=False)
     parser.add_argument('-i','--input', action='store', type=str,
                         help='File to process', required=False)
     parser.add_argument('-c','--colnames', action='store',type=str,
@@ -40,11 +42,14 @@ def get_df(args):
 
     fname = sys.stdin
 
-    if args["input"] != None:
+    if args["input"] is not None:
         fname = args["input"]
-    
+        
     try:
-        df = pd.read_csv(fname, skiprows=args["skiprows"])
+        if args["force"] is False:
+            df = pd.read_csv(fname, skiprows=args["skiprows"])
+        else:
+            df = pd.read_csv(fname, skiprows=args["skiprows"],dtype=str)
         return df
     except Exception, e:
         eprint("Error loading CSV: " + str(e))
@@ -54,17 +59,16 @@ def main():
     a = get_args()
     df = get_df(a)
 
+    # prettify column names
+    if a["pretty"] is True:
+        df = pretty_cols( df )
+
     # add or drop columns (add takes precedent)
     if a["add"] is None:
         if a["drop"] is not None:
             df = drop( df, a["drop"] )
     else:
         df = select(df, a["add"] )
-
-
-    # prettify column names
-    if a["pretty"] is True:
-        df = pretty_cols( df )
 
     # rename columns
     df = rename_cols( df, a["colnames"] )
@@ -79,7 +83,7 @@ def main():
 
     # output json or csv
     if a["json"] is True:
-        print df.to_json()
+        print df.to_json(orient="records")
     else:
         print df.to_csv(index=False,encoding="utf-8",
                            quoting=csv.QUOTE_NONNUMERIC)

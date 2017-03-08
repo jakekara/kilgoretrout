@@ -1,10 +1,12 @@
 from tabstream.error import eprint
 from clean_code_cols import clean_code_cols as ccc
-
+from clean_code_cols import clean_all_cols as cac
+from add_district_code import add_district_code as adc
 registry = {
-    "clean_code_columns":ccc
+    "clean_code_columns":ccc,
+    "rmequals": cac,
+    "adddist": adc
 }
-
 
 def do_procedure( df, p ):
     if p not in registry:
