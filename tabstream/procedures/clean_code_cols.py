@@ -3,7 +3,7 @@
 #
 
 import re
-from error import eprint
+from tabstream.error import eprint
 
 def clean_str( s ):
     return re.sub(r"[\"=]+","", s)

@@ -6,12 +6,13 @@
 import pandas as pd
 import sys, argparse, csv
 
-from transforms import drop, select, pretty_cols, rename_cols
-from procedures.registry import do_procedures
-from error import eprint
+from tabstream.transforms import drop, select, pretty_cols, rename_cols
+from tabstream.procedures.registry import do_procedure
+from tabstream.error import eprint
 
 def get_args():
-    parser = argparse.ArgumentParser(description='CSV toolkit')
+
+    parser = argparse.ArgumentParser(description='Larry, the tab-u-lar toolkit')
     parser.add_argument('-s','--skiprows', help='Number of rows to skip',
                         type=int, required=False)
     parser.add_argument('-t','--transpose', action='store_true',
@@ -55,7 +56,8 @@ def main():
 
     # add or drop columns (add takes precedent)
     if a["add"] is None:
-        df = drop( df, a["drop"] )
+        if a["drop"] is not None:
+            df = drop( df, a["drop"] )
     else:
         df = select(df, a["add"] )
 

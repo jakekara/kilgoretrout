@@ -1,4 +1,4 @@
-from error import eprint
+from tabstream.error import eprint
 from clean_code_cols import clean_code_cols as ccc
 
 registry = {
