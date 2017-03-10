@@ -23,6 +23,10 @@ CONS
 
 	Again, csvkit is better and more robust, so use that.
 
+INSTALLATION
+
+	pip install git+git://github.com/jakekara/kilgoretrout
+
 EXAMPLE
 
 
