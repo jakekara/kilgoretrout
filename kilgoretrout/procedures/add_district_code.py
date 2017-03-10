@@ -3,7 +3,7 @@
 #                     required cols: school_code, district, school
 #
 
-from tabstream.error import eprint
+from kilgoretrout.error import eprint
 import json
 
 def district_code( df, district_name ):

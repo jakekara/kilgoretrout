@@ -1,0 +1,76 @@
+KILGORE TROUT
+
+	A tabular data manipulation from the command line
+
+ABOUT
+
+	This is just an outgrowth of a cleanup project I'm working on. It grew
+	into a pretty useful tool, but it's bumping up against the functionality
+	of csvkit (csvkit.readthedocs.io), which is better, so use that.
+
+PROS
+
+	One cool feature of kilgore is that you can write procedures -- python
+	scripts to do something "domain-specific" -- and add them to the
+	package, then call those procedures with the --load argument. This is
+	how I kept the project-specific functionality separate from the general
+	use functionality of CSV manipulation.
+
+CONS
+
+	This was not built for efficiency. This is mostly just a Pandas wrapper,
+	and each transformation you do adds a (usually) O(n) operation.
+
+	Again, csvkit is better and more robust, so use that.
+
+EXAMPLE
+
+
+DEMO 
+
+	The demo folder contains some raw data, some cleaned up data in both CSV
+	and JSON formats, and a scripts folder containing all the code to get
+	the data from raw to clean.
+
+	They are meant to be run from the demo directory, since the paths are
+	relative. To run them all at once, use:
+
+	      $ scripts/all.sh
+
+	scripts:
+		scripts/forceutf8.sh           - use iconv to make sure stream
+					         is valid utf-8 only, dropping
+						 bad characters 
+		scripts/absenteeism.sh 	       - create tables related to chronic
+				       	       	 absenteeism
+		scripts/master_school_list.sh  - create master list of schools
+		scripts/all_to_json.sh	       - converts all the CSVs created
+					       	 with the above scripts to JSON
+		scripts/all.sh		       - run all of the scripts above
+
+			
+
+USAGE
+
+$ kilgore --help
+usage: kilgore [-h] [-s SKIPROWS] [-t] [-d DROP] [-a ADD] [-p] [-j] [-f] [-i INPUT] [-c COLNAMES] [-r ROWS] [-l LOAD]
+
+Kilgore - tabular data stream manipulation
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -s SKIPROWS, --skiprows SKIPROWS
+                        Number of rows to skip
+  -t, --transpose       Transpose table
+  -d DROP, --drop DROP  Drop (exclude) a column
+  -a ADD, --add ADD     Add (include) a column (supercedes drop)
+  -p, --pretty          Prettify column names
+  -j, --json
+  -f, --force           Read all input as strings
+  -i INPUT, --input INPUT
+                        File to process
+  -c COLNAMES, --colnames COLNAMES
+                        set columns: --colnames=[COL1,COL2,COL3,...]
+  -r ROWS, --rows ROWS  print N rows
+  -l LOAD, --load LOAD  load registered procedure
+

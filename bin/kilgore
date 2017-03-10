@@ -6,13 +6,13 @@
 import pandas as pd
 import sys, argparse, csv
 
-from tabstream.transforms import drop, select, pretty_cols, rename_cols
-from tabstream.procedures.registry import do_procedures
-from tabstream.error import eprint
+from kilgoretrout.transforms import drop, select, pretty_cols, rename_cols
+from kilgoretrout.procedures.registry import do_procedures
+from kilgoretrout.error import eprint
 
 def get_args():
 
-    parser = argparse.ArgumentParser(description='Larry, the tab-u-lar toolkit')
+    parser = argparse.ArgumentParser(description='Kilgore - tabular data stream manipulation')
     parser.add_argument('-s','--skiprows', help='Number of rows to skip',
                         type=int, required=False)
     parser.add_argument('-t','--transpose', action='store_true',

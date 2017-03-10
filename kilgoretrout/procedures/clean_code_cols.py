@@ -3,8 +3,8 @@
 #                     or from all columns with clean_all_codes
 #
 
-import re# , math
-from tabstream.error import eprint
+import re
+from kilgoretrout.error import eprint
 
 def clean_str( s ):
     if s is None:
